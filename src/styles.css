@@ -1,0 +1,19 @@
+body {
+  font-family: sans-serif;
+}
+.square {
+  width: 40px;
+  height: 40px;
+  border: 1px solid red;
+  text-align: center;
+  line-height: 40px;
+  margin: 5px;
+}
+
+.done {
+  background: gray;
+}
+
+.show {
+  background: green;
+}
