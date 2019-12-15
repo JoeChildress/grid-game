@@ -32,65 +32,67 @@ function gridGame(ar, el) {
   document.querySelectorAll(".square").forEach(sq => {
     sq.addEventListener("click", handleClick);
   });
-}
-function handleClick(e) {
-  const clickedBox = e.currentTarget;
 
-  //check to see if already selected
-  if (!clickedBox.classList.contains("hide")) {
-    console.log("already selected, try another");
-    return;
-  }
+  function handleClick(e) {
+    const clickedBox = e.currentTarget;
 
-  //first square selected
-  if (!firstNum) {
-    //remove hide class to show number and add as first number selected
-    clickedBox.classList.toggle("hide");
-    firstNum = clickedBox;
+    //check to see if already selected
+    if (!clickedBox.classList.contains("hide")) {
+      console.log("already selected, try another");
+      return;
+    }
 
-    //if second square selected and not previously selected
-  } else if (firstNum && !checkClicked(clickedBox)) {
-    //reveal 2nd box
-    clickedBox.classList.toggle("hide");
+    //first square selected
+    if (!firstNum) {
+      //remove hide class to show number and add as first number selected
+      clickedBox.classList.toggle("hide");
+      firstNum = clickedBox;
 
-    //if matching numbers
-    if (clickedBox.textContent === firstNum.textContent) {
-      //add classes to designate as matched
-      clickedBox.classList.add("match");
-      firstNum.classList.add("match");
+      //if second square selected and not previously selected
+    } else if (firstNum && !checkClicked(clickedBox)) {
+      //reveal 2nd box
+      clickedBox.classList.toggle("hide");
 
-      //increment score
-      if (score < 8) {
-        score++;
-        clearfirstNum();
+      //if matching numbers
+      // if (clickedBox.textContent === firstNum.textContent) {
+      if (clickedBox.textContent === firstNum.textContent) {
+        //add classes to designate as matched
+        clickedBox.classList.add("match");
+        firstNum.classList.add("match");
+
+        //increment score
+        if (score < 8) {
+          score++;
+          clearFirstNum();
+        }
+
+        //check if winner
+        if (score === 8) {
+          document.querySelector("#success").textContent = "YOU WIN!";
+        }
+
+        //not matching numbers
+      } else {
+        //hide unmatched elements with a slight delay
+        setTimeout(function() {
+          clickedBox.classList.toggle("hide");
+          firstNum.classList.toggle("hide");
+          firstNum.classList.toggle("in-play");
+          clearFirstNum();
+        }, 700);
       }
-
-      //check if winner
-      if (score === 8) {
-        document.querySelector("#success").textContent = "YOU WIN!!!";
-      }
-
-      //not matching numbers
-    } else {
-      //hide unmatched elements with a slight delay
-      setTimeout(function() {
-        clickedBox.classList.toggle("hide");
-        firstNum.classList.toggle("hide");
-        firstNum.classList.toggle("in-play");
-        clearfirstNum();
-      }, 1000);
     }
   }
-}
 
-function checkClicked(el) {
-  if (!el.classList.contains("hide")) {
-    return true;
+  function checkClicked(el) {
+    if (!el.classList.contains("hide")) {
+      return true;
+    }
   }
-}
 
-function clearfirstNum() {
-  firstNum = undefined;
+  function clearFirstNum() {
+    firstNum = undefined;
+  }
 }
 
 /*
